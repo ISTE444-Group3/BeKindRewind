@@ -1,0 +1,26 @@
+{
+  "name": "bekindrewind_api",
+  "version": "1.0.0",
+  "description": "ISTE444 Project 2 BeKindRewind API Layer",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ISTE444-Group3/BeKindRewind.git"
+  },
+  "author": "Group 3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ISTE444-Group3/BeKindRewind/issues"
+  },
+  "homepage": "https://github.com/ISTE444-Group3/BeKindRewind#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0"
+  }
+}
