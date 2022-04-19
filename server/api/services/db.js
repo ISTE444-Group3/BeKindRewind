@@ -1,13 +1,19 @@
-const mysql = require('mysql2/promise');
-const config = require('../../config');
+var mysql = require('mysql'); 
 
-async function query(sql, params) {
-    const connection = await mysql.createConnection(config.db);
-    const [results, ] = await connection.execute(sql, params);
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "bkrAdmin",
+    password: "BeKindRewindG003",
+    database: "bekindrewind",
+    port: 3306
+});
 
-    return results;
-}
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 module.exports = {
-    query
+    con
 }
+
