@@ -1,6 +1,4 @@
 const db = require('./db');
-const helper = require('../../helper');
-var response;
 
 async function getMultiple(){
     // const rows = await db.conn.query(
@@ -17,13 +15,11 @@ async function getMultiple(){
         join bekindrewind.inventory_items ii on cir.item_id=ii.item_id
         join bekindrewind.inventory_media_types imt on ii.media_code = imt.item_media_code`;
 
-    db.con.query(sql, function (err, result) {
+    return db.con.query(sql, function (err, result) {
         if (err) throw err;
-        // console.log(result);
-        response = result;
+        console.log(result);
+        return result;
     });
-
-    return response.query;
 }
 
 module.exports = {
