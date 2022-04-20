@@ -3,6 +3,11 @@ var outArray = [];
 const router = express.Router();
 const db = require('../db');
 const url = require('url');
+var media;
+var title;
+var stock;
+var rate;
+var pid;
 
 // GET Methods
 router.get('/inventory', function (req, res) {
@@ -55,60 +60,77 @@ router.put('/inventory', function (req, res){
     var len = Object.keys(queryObject).length;
 
     if (len > 0) {
+        var mediaUpd, titleUpd, stockUpd, rateUpd;
         if (queryObject.item_id == undefined) {
             res.send("PUT: item_id Must Be Defined!");
         }
         else {
+            pid = queryObject.item_id;
             for (let i = 0; i < len; i++) {
                 if (queryObject.media_code !== undefined) {
-
-                    if (queryObject.media_code > 3 || queryObject.media_code < 1) {
-                        res.send("PUT: media_code Must Be Between 1 and 3!");
-                    }
-                    else {
-                        updateCode(queryObject.item_id, queryObject.media_code, function (err, result) {
-                            if (err) {
-                                console.log(err);
-                            }
-                            res.json({
-                                affectedRows: result.affectedRows
-                            });
-                        });
-                    }
+                    mediaUpd = true;
+                    media = queryObject.media_code;
                 }
-                else if (queryObject.movie_title !== undefined) {
-                    updateTitle(queryObject.item_id, queryObject.movie_title, function (err, result) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        res.json({
-                            affectedRows: result.affectedRows
-                        });
-                    });
+                if (queryObject.movie_title !== undefined) {
+                    titleUpd = true;
+                    title = queryObject.movie_title;
                 }
-                else if (queryObject.number_in_stock !== undefined) {
-                    updateStock(queryObject.item_id, queryObject.number_in_stock, function (err, result) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        res.json({
-                            affectedRows: result.affectedRows
-                        });
-                    });
+                if (queryObject.number_in_stock !== undefined) {
+                    stockUpd = true;
+                    stock = queryObject.number_in_stock;
                 }
-                else if (queryObject.rental_rate !== undefined) {
-                    updateRate(queryObject.item_id, queryObject.rental_rate, function (err, result) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        res.json({
-                            affectedRows: result.affectedRows
-                        });
-                    });
+                if (queryObject.rental_rate !== undefined) {
+                    rateUpd = true;
+                    rate = queryObject.rental_rate;
                 }
-                else {
+                if (len == 1) {
                     res.send("PUT: Update Field Must Be Defined");
                 }
+            }
+
+            var sql = "UPDATE inventory_items";
+            var set = false;
+            if (mediaUpd) {
+                sql = sql + " SET media_code = " + parseInt(media) + ",";
+                set = true;
+            }
+            if (titleUpd) {
+                if (!set) {
+                    sql = sql + " SET";
+                    set = true;
+                }
+                sql = sql + " movie_title = '" + title + "',";
+            }
+            if (stockUpd) {
+                if (!set) {
+                    sql = sql + " SET";
+                    set = true;
+                }
+                sql = sql + " number_in_stock = " + parseInt(stock) + ",";
+            }
+            if (rateUpd) {
+                if (!set) {
+                    sql = sql + " SET";
+                    set = true;
+                }
+                sql = sql + " rental_rate = " + parseFloat(rate) + ",";
+            }
+            if (mediaUpd || titleUpd || stockUpd || rateUpd) {
+                if (sql.slice(-1) == ',') {
+                    sql = sql.slice(0, -1);
+                }
+                sql = sql + " WHERE item_id = " + parseInt(pid) + ";";
+
+                console.log(sql);
+
+                update(sql, function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.json({
+                        rowsUpdated: result.affectedRows
+                    });
+                });
             }
             
         }
@@ -176,7 +198,6 @@ function getInventoryByName(name, callback) {
     var sql = `SELECT * FROM inventory_items WHERE LOWER( movie_title ) LIKE LOWER( ? )`;
 
     db.conn.query(sql, [ name ], function (err, rows, fields) {
-        console.log(sql);
         if (!err) {
             if (rows) {
                 callback(null, rows);
@@ -203,66 +224,8 @@ function newInventory(media_code, movie_title, number_in_stock, rental_rate, cal
     });
 }
 
-function updateCode(item_id, media_code, callback) {
-    media_code = parseInt(media_code);
-    item_id = parseInt(item_id);
-
-    var sql = "UPDATE inventory_items SET media_code = ? WHERE item_id = ?";
-
-    db.conn.query(sql, [ media_code, item_id ], function (err, rows, fields) {
-        if (!err) {
-            if (rows) {
-                callback(null, rows);
-            }
-        } else {
-            callback(err, null);
-            console.log('Error while performing Query.');
-        }
-    });
-}
-
-function updateTitle(item_id, movie_title, callback) {
-    item_id = parseInt(item_id);
-
-    var sql = "UPDATE inventory_items SET movie_title = ? WHERE item_id = ?";
-
-    db.conn.query(sql, [ movie_title, item_id ], function (err, rows, fields) {
-        if (!err) {
-            if (rows) {
-                callback(null, rows);
-            }
-        } else {
-            callback(err, null);
-            console.log('Error while performing Query.');
-        }
-    });
-}
-
-function updateStock(item_id, number_in_stock, callback) {
-    item_id = parseInt(item_id);
-    number_in_stock = parseInt(number_in_stock);
-
-    var sql = "UPDATE inventory_items SET number_in_stock = ? WHERE item_id = ?";
-
-    db.conn.query(sql, [ number_in_stock, item_id ], function (err, rows, fields) {
-        if (!err) {
-            if (rows) {
-                callback(null, rows);
-            }
-        } else {
-            callback(err, null);
-            console.log('Error while performing Query.');
-        }
-    });
-}
-
-function updateRate(item_id, rental_rate, callback) {
-    item_id = parseInt(item_id);
-    rental_rate = parseFloat(rental_rate);
-
-    var sql = "UPDATE inventory_items SET rental_rate = ? WHERE item_id = ?";
-
-    db.conn.query(sql, [ rental_rate, item_id ], function (err, rows, fields) {
+function update(sql, callback) {
+    db.conn.query(sql, function (err, rows, fields) {
         if (!err) {
             if (rows) {
                 callback(null, rows);
