@@ -120,9 +120,6 @@ router.put('/inventory', function (req, res){
                     sql = sql.slice(0, -1);
                 }
                 sql = sql + " WHERE item_id = " + parseInt(pid) + ";";
-
-                console.log(sql);
-
                 update(sql, function (err, result) {
                     if (err) {
                         console.log(err);
