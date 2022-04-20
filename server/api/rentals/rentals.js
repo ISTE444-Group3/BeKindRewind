@@ -31,7 +31,7 @@ router.get('/rentals', function (req, res) {
 });
 
 // POST Methods
-router.get('/rentals', function (req, res) {
+router.post('/rentals', function (req, res) {
     const queryObject = url.parse(req.url,true).query; // Parse URL parameters into object
 
 });
