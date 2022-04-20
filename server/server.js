@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const inventoryRouter = require("./api/routes/inventoryRoutes");
+const inventoryRouter = require("./api/inventory/inventory");
 
 app.use(express.json());
 app.use(
