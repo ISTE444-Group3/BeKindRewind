@@ -45,7 +45,7 @@ router.post('/inventory', function (req, res) {
         });
     }
     else {
-        res.send("No or Too Few Parameters Sent, Try Again");
+        res.send("POST: No or Too Few Parameters Sent, Try Again");
     }
 });
 
@@ -57,32 +57,32 @@ router.delete('/inventory', function (req, res){
     var len = Object.keys(queryObject).length;
 
     if (len > 0) {
-        if (Object.keys(queryObject.name).length > 0) {
-            deleteInventoryName(queryObject.media_code, function (err, result) {
+        if (queryObject.movie_title !== undefined) {
+            deleteInventoryName(queryObject.movie_title, function (err, result) {
                 if (err) {
                     console.log(err);
                 }
                 res.json({
-                    insertId: result.insertId
+                    rowsDeleted: result.affectedRows
                 });
             });
         }
-        else if (Object.keys(queryObject.itemId).length > 0) {
-            deleteInventoryID(queryObject.media_code, function (err, result) {
+        else if (queryObject.item_id !== undefined) {
+            deleteInventoryID(queryObject.item_id, function (err, result) {
                 if (err) {
                     console.log(err);
                 }
                 res.json({
-                    insertId: result.insertId
+                    rowsDeleted: result.affectedRows
                 });
             });
         }
         else {
-            res.send("No or Too Few Parameters Sent, Try Again");
+            res.send("DELETE: No or Too Few Parameters Sent, Try Again");
         }
     }
     else {
-        res.send("No or Too Few Parameters Sent, Try Again");
+        res.send("DELETE: No or Too Few Parameters Sent, Try Again");
     }
 });
 
@@ -105,9 +105,10 @@ function getInventory(callback) {
 
 function getInventoryByName(name, callback) {
 
-    var sql = `SELECT * FROM inventory_items WHERE LOWER( movie_title ) LIKE LOWER( "`+ name +`" )`;
+    var sql = `SELECT * FROM inventory_items WHERE LOWER( movie_title ) LIKE LOWER( ? )`;
 
-    db.conn.query(sql, function (err, rows, fields) {
+    db.conn.query(sql, [ name ], function (err, rows, fields) {
+        console.log(sql);
         if (!err) {
             if (rows) {
                 callback(null, rows);
@@ -138,8 +139,35 @@ function updateInventory() {
 
 }
 
-function deleteInventory() {
+function deleteInventoryName(name, callback) {
+    var sql = "DELETE FROM inventory_items WHERE movie_title = ?";
 
+    db.conn.query(sql, [ name ], function (err, rows, fields) {
+        if (!err) {
+            if (rows) {
+                callback(null, rows);
+            }
+        } else {
+            callback(err, null);
+            console.log('Error while performing Query.');
+        }
+    });
+}
+
+function deleteInventoryID(id, callback) {
+    id = parseInt(id);
+    var sql = "DELETE FROM inventory_items WHERE item_id = '?'";
+
+    db.conn.query(sql, [ id ], function (err, rows, fields) {
+        if (!err) {
+            if (rows) {
+                callback(null, rows);
+            }
+        } else {
+            callback(err, null);
+            console.log('Error while performing Query.');
+        }
+    });
 }
 
 module.exports = router;

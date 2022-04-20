@@ -16,12 +16,10 @@
     "url": "https://github.com/ISTE444-Group3/BeKindRewind/issues"
   },
   "homepage": "https://github.com/ISTE444-Group3/BeKindRewind#readme",
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  },
   "dependencies": {
     "express": "^4.17.3",
     "mongoose": "^6.3.0",
-    "mysqli": "^3.1.4"
+    "mysqli": "^3.1.4",
+    "nodemon": "^2.0.15"
   }
 }
