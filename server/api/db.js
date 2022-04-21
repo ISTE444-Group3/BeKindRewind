@@ -1,11 +1,12 @@
 var mysql = require('mysql'); 
 
 var conn = mysql.createConnection({
-    host: "localhost",
-    user: "bkrAdmin",
-    password: "BeKindRewindG003",
-    database: "bekindrewind",
-    port: 3306
+  multipleStatements: true,
+  host: "localhost",
+  user: "bkrAdmin",
+  password: "BeKindRewindG003",
+  database: "bekindrewind",
+  port: 3306
 });
 
 conn.connect(function(err) {

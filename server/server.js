@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 
 // Path Definitions
 app.get("/rentals", rentals);
+app.post("/rentals", rentals);
 
 app.get("/inventory", inventory);
 app.post("/inventory", inventory);

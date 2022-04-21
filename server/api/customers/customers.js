@@ -2,6 +2,7 @@ const express = require('express');
 var outArray = [];
 const router = express.Router();
 const db = require('../db');
+const val = require('../validation/customerVal');
 const url = require('url');
 
 // GET Methods
