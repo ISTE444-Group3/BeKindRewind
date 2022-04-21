@@ -1,5 +1,4 @@
 const express = require('express');
-var outArray = [];
 const router = express.Router();
 const db = require('../db');
 const url = require('url');
