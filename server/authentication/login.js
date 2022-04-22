@@ -33,12 +33,13 @@ router.post('/login', async function (req, res) {
                         expiresIn: "24h",
                     }
                 );
-
-                // save user token
-                user.token = token;
-
                 // user
-                res.status(201).json(user);
+                res.status(201).json({
+                    "user_id": user.user_id,
+                    "user_name": user.first_name + " " + user.last_name,
+                    "email": user.email,
+                    "session_token": user.session_token
+                });
             }
             else {
                 res.status(400).send("Invalid Credentials");
