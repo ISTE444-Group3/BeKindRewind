@@ -49,7 +49,7 @@ router.post('/inventory', function (req, res) {
         });
     }
     else {
-        res.send("POST: No or Too Few Parameters Sent, Try Again");
+        res.status(400).send("POST: No or Too Few Parameters Sent, Try Again");
     }
 });
 
@@ -61,7 +61,7 @@ router.put('/inventory', function (req, res){
     if (len > 0) {
         var mediaUpd, titleUpd, stockUpd, rateUpd;
         if (queryObject.item_id == undefined) {
-            res.send("PUT: item_id Must Be Defined!");
+            res.status(400).send("PUT: item_id Must Be Defined!");
         }
         else {
             pid = queryObject.item_id;
@@ -83,42 +83,26 @@ router.put('/inventory', function (req, res){
                     rate = queryObject.rental_rate;
                 }
                 if (len == 1) {
-                    res.send("PUT: Update Field Must Be Defined");
+                    res.status(400).send("PUT: Update Field Must Be Defined");
                 }
             }
 
-            var sql = "UPDATE inventory_items";
+            var sql = "UPDATE inventory_items SET";
             var set = false;
             if (mediaUpd) {
-                sql = sql + " SET media_code = " + parseInt(media) + ",";
-                set = true;
+                sql = sql + " media_code = " + parseInt(media) + ",";
             }
             if (titleUpd) {
-                if (!set) {
-                    sql = sql + " SET";
-                    set = true;
-                }
                 sql = sql + " movie_title = '" + title + "',";
             }
             if (stockUpd) {
-                if (!set) {
-                    sql = sql + " SET";
-                    set = true;
-                }
                 sql = sql + " number_in_stock = " + parseInt(stock) + ",";
             }
             if (rateUpd) {
-                if (!set) {
-                    sql = sql + " SET";
-                    set = true;
-                }
                 sql = sql + " rental_rate = " + parseFloat(rate) + ",";
             }
             if (mediaUpd || titleUpd || stockUpd || rateUpd) {
-                if (sql.slice(-1) == ',') {
-                    sql = sql.slice(0, -1);
-                }
-                sql = sql + " WHERE item_id = " + parseInt(pid) + ";";
+                sql = sql.slice(0, -1) + " WHERE item_id = " + parseInt(pid) + ";";
                 update(sql, function (err, result) {
                     if (err) {
                         console.log(err);
@@ -133,7 +117,7 @@ router.put('/inventory', function (req, res){
         
     }
     else {
-        res.send("PUT: No or Too Few Parameters Sent, Try Again");
+        res.status(400).send("PUT: No or Too Few Parameters Sent, Try Again");
     }
 });
 

@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+require("dotenv").config();
 
 // Route Definitions
+const register = require("./authentication/register");
+const login = require("./authentication/login");
 const rentals = require("./api/rentals/rentals");
 const inventory = require("./api/inventory/inventory");
 const customers = require("./api/customers/customers");
@@ -18,6 +21,9 @@ app.get("/", (req, res) => {
 });
 
 // Path Definitions
+app.post("/register", register);
+app.post("/login", login);
+
 app.get("/rentals", rentals);
 app.post("/rentals", rentals);
 

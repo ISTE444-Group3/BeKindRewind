@@ -45,7 +45,7 @@ router.post('/rentals', function (req, res) {
         });
     }
     else {
-        res.send("POST: No or Too Few Parameters Sent, Try Again");
+        res.status(400).send("POST: No or Too Few Parameters Sent, Try Again");
     }
 
 });
