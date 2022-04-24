@@ -44,7 +44,7 @@ ___
 * Request Headers: `"x-access-token": tokenValue`
 * Request Body: `"token": "tokenValue"`
 * Query Parameter (NOT RECOMMENDED): `&token=tokenValue`
-### Tokens MUST Be Re-Created (Log-In) 24 Hours Aftew Creation!
+### Tokens MUST Be Re-Created (Log-In) 24 Hours After Creation!
 
 ___
 
