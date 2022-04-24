@@ -62,4 +62,4 @@ __Inventory__
 
 __Customers__
 * GET /customer: Get all customers
-* GET /customer?name=[NAME]: Get all customers with name matching
+* GET /customer?name=[NAME]: Get all customers with name matching [NAME]
