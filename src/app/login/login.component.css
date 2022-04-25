@@ -1,0 +1,12 @@
+.login-form {
+    padding: 1em;
+}
+
+#login-button {
+    width: 200px;
+    padding: 0.5em;
+}
+
+.mat-form-field {
+    width: 300px;
+}

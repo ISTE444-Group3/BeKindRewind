@@ -1,0 +1,28 @@
+<div class="add-item-form">
+    <h2>Add Item</h2>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Movie Title:</mat-label>
+            <input #title matInput type="text">
+        </mat-form-field>
+        <br />
+        <mat-radio-group aria-label="Select Media Type">
+            <mat-label>Media Type:</mat-label><br />
+            <mat-radio-button value="1">VHS</mat-radio-button><br />
+            <mat-radio-button value="2">DVD</mat-radio-button><br />
+            <mat-radio-button value="3">LASERDISC</mat-radio-button><br />
+        </mat-radio-group>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Number in Stock:</mat-label>
+            <input #num_stock matInput type="number">
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Rental Rate:</mat-label>
+            <input #rate matInput type="number">
+        </mat-form-field>
+        <br />
+        <button mat-flat-button color="primary" type="button" (click)="addItem(1, title.value, num_stock.value, rate.value)">Add</button>
+    </form>
+</div>
