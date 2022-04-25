@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 require("dotenv").config();
+const cors = require('cors');
 
 // Route Definitions
 const auth = require("./authentication/auth");
@@ -21,6 +22,9 @@ app.use(
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
+
+// CORS Definitions
+app.use(cors());
 
 // Path Definitions
 app.post("/register", register);
