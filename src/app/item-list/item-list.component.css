@@ -1,0 +1,42 @@
+.item-card {
+    width: 300px;
+    margin: 0.5em;
+    padding: 1.5em;
+}
+
+.item-card button {
+    margin: 10px;
+}
+
+.inventory-page {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#stock-span {
+    float: right;
+}
+
+.items-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.items-search button {
+    margin-left: 0.5em;
+    position: relative;
+    top: -6px;
+    height: 59px;
+    width: 100px;
+}
+
+.items-search .mat-form-field {
+    width: 300px;
+}

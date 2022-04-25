@@ -9,16 +9,18 @@ import { ApiService } from '../api.service';
 })
 export class ItemAddComponent implements OnInit {
 
+  type_select = '';
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
-  addItem(media_code: number, movie_title: String, number_in_stock: String, rental_rate: String): void {
+  addItem(movie_title: String, number_in_stock: String, rental_rate: String): void {
     movie_title = movie_title.trim();
 
     // can throw some validations in here
-    this.apiService.addItem(media_code, movie_title, Number(number_in_stock), Number(rental_rate)).subscribe((item) => console.log(item));
+    this.apiService.addItem(Number(this.type_select), movie_title, Number(number_in_stock), Number(rental_rate)).subscribe((item) => console.log(item));
   }
 
 }

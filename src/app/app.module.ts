@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { RegisterComponent } from './register/register.component';
@@ -42,7 +44,9 @@ import { ItemAddComponent } from './item-add/item-add.component';
     MatCardModule,
     MatDividerModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSidenavModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

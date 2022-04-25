@@ -1,9 +1,16 @@
+<mat-drawer-container autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>{{title}}</p>
+    <mat-divider></mat-divider><br />
+    <a routerLink="/inventory">Inventory</a><br />
+    <a routerLink="/addItem">Add Item</a><br />
+    <a routerLink="/login">Login</a>
+  </mat-drawer>
 
-<div>
-  <h1>{{title}}</h1>
-  <app-login></app-login>
-  <app-item-list></app-item-list>
-  <app-item-add></app-item-add>
-</div>
-
-<router-outlet></router-outlet>
+  <div>
+    <button type="button" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <router-outlet></router-outlet>
+</mat-drawer-container>

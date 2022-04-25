@@ -1,1 +1,35 @@
-<p>item-detail works!</p>
+<div class="edit-item-form" *ngIf="selected_item">
+    <h2>Edit Item</h2>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Movie Title:</mat-label>
+            <input #title matInput type="text" value="{{selected_item.movie_title}}" required>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Media Type:</mat-label>
+            <mat-select [(value)]="type_select" [(ngModel)]="type_select" name="type" required>
+              <mat-option [value]="1">VHS</mat-option>
+              <mat-option [value]="2">DVD</mat-option>
+              <mat-option [value]="2">LASERDISC</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Number in Stock:</mat-label>
+            <input #num_stock matInput value="{{selected_item.number_in_stock}}" required>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Rental Rate:</mat-label>
+            <input #rate matInput value="{{selected_item.rental_rate}}" required>
+        </mat-form-field>
+        <br />
+        <button mat-flat-button color="primary" type="button" (click)="saveItem(title.value, num_stock.value, rate.value)">Save Item</button>
+        <button mat-flat-button type="button">Delete Item</button>
+        <button type="button" mat-flat-button routerLink="/inventory">Cancel</button>
+    </form>
+</div>
+<div class="edit-item-form" *ngIf="!selected_item">
+    <p>Item information unavailable.</p>
+</div>

@@ -6,12 +6,14 @@
             <input #title matInput type="text">
         </mat-form-field>
         <br />
-        <mat-radio-group aria-label="Select Media Type">
-            <mat-label>Media Type:</mat-label><br />
-            <mat-radio-button value="1">VHS</mat-radio-button><br />
-            <mat-radio-button value="2">DVD</mat-radio-button><br />
-            <mat-radio-button value="3">LASERDISC</mat-radio-button><br />
-        </mat-radio-group>
+        <mat-form-field appearance="outline">
+            <mat-label>Media Type:</mat-label>
+            <mat-select [(ngModel)]="type_select" name="type">
+              <mat-option [value]="1">VHS</mat-option>
+              <mat-option [value]="2">DVD</mat-option>
+              <mat-option [value]="2">LASERDISC</mat-option>
+            </mat-select>
+          </mat-form-field>
         <br />
         <mat-form-field appearance="outline">
             <mat-label>Number in Stock:</mat-label>
@@ -23,6 +25,6 @@
             <input #rate matInput type="number">
         </mat-form-field>
         <br />
-        <button mat-flat-button color="primary" type="button" (click)="addItem(1, title.value, num_stock.value, rate.value)">Add</button>
+        <button mat-flat-button color="primary" type="button" (click)="addItem(title.value, num_stock.value, rate.value)">Add Item</button>
     </form>
 </div>

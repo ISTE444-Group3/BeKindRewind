@@ -11,7 +11,7 @@ import { ApiService } from '../api.service';
 export class ItemListComponent implements OnInit {
 
   items: Item[] =[];
-  value = 'Search Items';
+  value = '';
 
   constructor(private apiService: ApiService) { }
 
@@ -20,7 +20,15 @@ export class ItemListComponent implements OnInit {
   }
 
   getItems(): void {
-    this.apiService.getItems().subscribe((items) => this.items = items);
+    this.items = [];
+    this.apiService.getItems().subscribe((items) => 
+      { 
+        let temp_items: any = items['inventory' as keyof Item[]];
+        temp_items.forEach((item: any) => {
+          let new_item: Item = item;
+          this.items.push(new_item);
+        });
+      });
   }
 
   convertMediaType(type: any): String {
