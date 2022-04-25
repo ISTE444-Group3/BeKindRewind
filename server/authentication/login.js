@@ -55,7 +55,9 @@ router.post('/login', async function (req, res) {
                     console.log("User " + user.email + " logged in");          
                 } else {
                     // If matching credentials were not found, return code 404 (wrong credentials) to the client
-                    res.status(401).send()          
+                    res.status(401).json({
+                        "error": "Email or Password Not Found"
+                      });          
                 }
             })
             .catch(error => {
