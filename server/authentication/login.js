@@ -14,7 +14,9 @@ router.post('/login', async function (req, res) {
 
         // Validate user input
         if (!(email && password)) {
-            res.status(400).send("All input is required");
+            res.status(400).json({
+                "error": "All Input Fields are Required"
+              });
         }
         // Validate if user exist in our database
         var user;
@@ -42,7 +44,9 @@ router.post('/login', async function (req, res) {
                 });
             }
             else {
-                res.status(400).send("Invalid Credentials");
+                res.status(400).json({
+                    "error": "Invalid Credentials"
+                  });
             }
         });
         
