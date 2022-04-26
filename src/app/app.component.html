@@ -2,13 +2,17 @@
   <mat-drawer #drawer class="example-sidenav" mode="side">
     <p>{{title}}</p>
     <mat-divider></mat-divider><br />
-    <a routerLink="/inventory">Inventory</a><br />
-    <a routerLink="/addItem">Add Item</a><br />
-    <a routerLink="/login">Login</a>
+    <mat-selection-list [multiple]="false">
+      <mat-list-option routerLink="/inventory" role="">Inventory</mat-list-option>
+      <mat-list-option routerLink="/addItem">Add Item</mat-list-option>
+      <mat-list-option *ngIf="window.sessionStorage.getItem('logged_in') === 'false'" routerLink="/login">Login</mat-list-option>
+      <mat-list-option *ngIf="window.sessionStorage.getItem('logged_in') === 'true'" (click)="logout()" >Logout</mat-list-option>
+      <mat-list-option routerLink="/rentals">Rentals</mat-list-option>
+    </mat-selection-list>
   </mat-drawer>
 
   <div>
-    <button type="button" mat-icon-button (click)="drawer.toggle()">
+    <button type="button" class="toggle-nav-button" mat-icon-button (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>

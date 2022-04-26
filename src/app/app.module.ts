@@ -18,10 +18,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 import { RegisterComponent } from './register/register.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { ItemAddComponent } from './item-add/item-add.component';
+import { RentalFormComponent } from './rental-form/rental-form.component';
+import { RentalsListComponent } from './rentals-list/rentals-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,9 @@ import { ItemAddComponent } from './item-add/item-add.component';
     RegisterComponent,
     ItemListComponent,
     ItemDetailComponent,
-    ItemAddComponent
+    ItemAddComponent,
+    RentalFormComponent,
+    RentalsListComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,10 @@ import { ItemAddComponent } from './item-add/item-add.component';
     FormsModule,
     MatRadioModule,
     MatSidenavModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule,
+    MatListModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

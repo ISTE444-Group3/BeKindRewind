@@ -1,4 +1,4 @@
-<div class="add-item-form">
+<div class="add-item-form" *ngIf="window.sessionStorage.getItem('logged_in') === 'true'">
     <h2>Add Item</h2>
     <form>
         <mat-form-field appearance="outline">
@@ -27,4 +27,7 @@
         <br />
         <button mat-flat-button color="primary" type="button" (click)="addItem(title.value, num_stock.value, rate.value)">Add Item</button>
     </form>
+</div>
+<div class="login-warning" *ngIf="window.sessionStorage.getItem('logged_in') === 'false'">
+    <p>You must be logged in to add an item.</p>
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ApiService } from '../api.service';
 import { Item } from 'src/models/Item.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-item-detail',
@@ -16,7 +16,7 @@ export class ItemDetailComponent implements OnInit {
   selected_item: Item | undefined;
   items: Item[] = [];
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.getItems();
@@ -45,7 +45,19 @@ export class ItemDetailComponent implements OnInit {
     movie_title = movie_title.trim();
 
     // can throw some validations in here
-    this.apiService.updateItem(this.route.snapshot.params['id'], Number(this.type_select), movie_title, Number(number_in_stock), Number(rental_rate)).subscribe((item) => console.log(item));
+    this.apiService.updateItem(this.selected_item!.item_id, Number(this.type_select), movie_title, Number(number_in_stock), Number(rental_rate)).subscribe((item) => {
+      if (item['rowsUpdated'] > 0) {
+        this.router.navigateByUrl('/inventory');
+      }
+    });
+  }
+
+  deleteItem() {
+    this.apiService.deleteItem(this.selected_item!.item_id).subscribe((res) => {
+      if (res['rowsUpdated'] > 0) {
+        this.router.navigateByUrl('/inventory');
+      }
+    });
   }
 
 }

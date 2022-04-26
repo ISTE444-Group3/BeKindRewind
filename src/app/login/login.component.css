@@ -1,5 +1,7 @@
 .login-form {
-    padding: 1em;
+    width: 90%;
+    margin-left: auto;
+    margin-top: 5em;
 }
 
 #login-button {
