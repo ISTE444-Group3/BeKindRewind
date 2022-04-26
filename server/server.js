@@ -37,6 +37,9 @@ app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
 
+// CORS Definitions
+app.use(cors());
+
 // Path Definitions
 app.post("/register", register);
 app.post("/login", login);

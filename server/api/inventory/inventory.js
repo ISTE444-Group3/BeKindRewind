@@ -49,7 +49,9 @@ router.post('/inventory', function (req, res) {
         });
     }
     else {
-        res.status(400).send("POST: No or Too Few Parameters Sent, Try Again");
+        res.status(400).json({
+            "error": "POST: None or Too Few Parameters Sent"
+          });
     }
 });
 
@@ -61,7 +63,9 @@ router.put('/inventory', function (req, res){
     if (len > 0) {
         var mediaUpd, titleUpd, stockUpd, rateUpd;
         if (queryObject.item_id == undefined) {
-            res.status(400).send("PUT: item_id Must Be Defined!");
+            res.status(400).json({
+                "error": "PUT: item_id Must Be Defined"
+              });
         }
         else {
             pid = queryObject.item_id;
@@ -83,7 +87,9 @@ router.put('/inventory', function (req, res){
                     rate = queryObject.rental_rate;
                 }
                 if (len == 1) {
-                    res.status(400).send("PUT: Update Field Must Be Defined");
+                    res.status(400).json({
+                        "error": "PUT: Update Field Must Be Defined"
+                      });
                 }
             }
 
@@ -117,7 +123,9 @@ router.put('/inventory', function (req, res){
         
     }
     else {
-        res.status(400).send("PUT: No or Too Few Parameters Sent, Try Again");
+        res.status(400).json({
+            "error": "PUT: None or Too Few Parameters Sent"
+          });
     }
 });
 
@@ -148,11 +156,15 @@ router.delete('/inventory', function (req, res){
             });
         }
         else {
-            res.send("DELETE: No or Too Few Parameters Sent, Try Again");
+            res.status(400).json({
+                "error": "DELETE: item_id Must Be Defined"
+              });
         }
     }
     else {
-        res.send("DELETE: No or Too Few Parameters Sent, Try Again");
+        res.status(400).json({
+            "error": "DELETE: None or Too Few Parameters Sent"
+          });
     }
 });
 

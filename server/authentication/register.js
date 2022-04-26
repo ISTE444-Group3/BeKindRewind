@@ -15,7 +15,9 @@ router.post('/register', async function (req, res) {
 
         // Validate user input
         if (!(email && password && first_name && last_name)) {
-            res.status(400).send("All input is required");
+            res.status(400).json({
+                "error": "All Input is Required"
+              });
         }
 
         // check if user already exist
@@ -29,7 +31,9 @@ router.post('/register', async function (req, res) {
         });
 
         if (oldUser) {
-            res.status(409).send("User Already Exist. Please Login");
+            res.status(409).json({
+                "error": "User Already Exists - Please Login"
+              });
         }
 
         //Encrypt user password
