@@ -1,0 +1,19 @@
+<div class="login-form">
+    <h2>Login</h2>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input #email matInput placeholder="Email address">
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input #password matInput [type]="hide ? 'password' : 'text'">
+            <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <br />
+        <button id="login-button" mat-flat-button color="primary" (click)="login(email.value, password.value)" type="button">Login</button>
+    </form>
+</div>

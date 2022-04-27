@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { ApiService } from './api.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +10,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'BeKindRewind';
+  showFiller = false;
+
+  window = window;
+
+  constructor(private apiService: ApiService, private router: Router) {}
+
+  logout(): void {
+    this.apiService.logoutUser();
+    this.router.navigateByUrl("/");
+  }
 }
