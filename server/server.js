@@ -13,20 +13,47 @@ const rentals = require("./api/rentals/rentals");
 const inventory = require("./api/inventory/inventory");
 const customers = require("./api/customers/customers");
 
+const FileStreamRotator = require('file-stream-rotator')
+const fs = require('fs');
+const morgan = require('morgan');
+const path = require('path');
+
+
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
-app.get("/", (req, res) => {
-  res.json({ message: "ok" });
+
+var logDirectory = path.join(__dirname, 'log');
+// create a write stream (in append mode)
+var accessLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYYMMDD',
+  filename: path.join(logDirectory, '%DATE%-access.log'),
+  frequency: 'daily',
+  verbose: false
 });
+
+morgan.token('username', function (req, res) { 
+  var username ='USER: '+ req.headers['username']==''?'Null':req.headers['username'];
+  //var username = req.user ? req.user.username: "Guest";
+  return username;
+});
+// setup the logger
+//app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan(':date[iso] - :username   ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',{stream: accessLogStream}));
+
 
 // CORS Definitions
 app.use(cors({
   origin: '*'
 }));
+
+app.get("/", (req, res) => {
+  res.json({ message: "ok" });
+});
+
 
 // Path Definitions
 app.post("/register", register);

@@ -44,6 +44,7 @@ ___
 * Request Headers: `"x-access-token": tokenValue`
 * Request Body: `"token": "tokenValue"`
 * Query Parameter (NOT RECOMMENDED): `&token=tokenValue`
+### Tokens MUST Be Re-Created (Log-In) 24 Hours After Creation!
 
 ___
 
@@ -61,4 +62,4 @@ __Inventory__
 
 __Customers__
 * GET /customer: Get all customers
-* GET /customer?name=[NAME]: Get all customers with name matching
+* GET /customer?name=[NAME]: Get all customers with name matching [NAME]

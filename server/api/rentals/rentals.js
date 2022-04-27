@@ -93,9 +93,12 @@ function getRentalsByName(name, callback) {
 }
 
 function newRental(customer_id, item_id, notes, callback) {
-    let sql = `INSERT INTO customer_item_rental VALUES (null, ` + parseInt(customer_id) + `, ` + parseInt(item_id) + `, now(), date_add(now(), INTERVAL 5 DAY), null, 0, "` + notes + `");
-                UPDATE inventory_items SET inventory_items.number_in_stock = (SELECT inventory_items.number_in_stock FROM inventory_items WHERE inventory_items.item_id = ` + parseInt(item_id) + `)-1 WHERE inventory_items.item_id = ` + parseInt(item_id) + `;`;
-
+    let sql =`BEGIN;
+        INSERT INTO customer_item_rental VALUES (null, ` + parseInt(customer_id) + `, ` + parseInt(item_id) + `, now(), date_add(now(), INTERVAL 5 DAY), null, 0, "` + notes + `");
+        SET @v1 = (SELECT inventory_items.number_in_stock-1  FROM inventory_items WHERE inventory_items.item_id = ` + parseInt(item_id) + `);
+        UPDATE inventory_items SET inventory_items.number_in_stock = @v1 WHERE inventory_items.item_id = ` + parseInt(item_id) + `;
+        COMMIT;`
+          
     db.conn.query(sql, function (err, rows, fields) {
         if (!err) {
             if (rows) {
