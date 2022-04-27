@@ -1,0 +1,23 @@
+<h1 mat-dialog-title *ngIf="selected_item">Rent {{selected_item.movie_title}}</h1>
+<div mat-dialog-content *ngIf="selected_item" class="rental-form">
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Media Type:</mat-label>
+            <input matInput type="text" disabled value="{{convertMediaType(selected_item.media_code)}}">
+        </mat-form-field><br />
+        <mat-form-field appearance="outline">
+            <mat-label>Rate:</mat-label>
+            <input matInput type="text" disabled value="${{selected_item.rental_rate}}">
+        </mat-form-field><br />
+        <mat-form-field appearance="outline">
+            <mat-label>Customer:</mat-label>
+            <mat-select [(value)]="customer_select" [(ngModel)]="customer_select" name="type" required>
+              <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">{{customer.first_name}}, {{customer.last_name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<mat-dialog-actions align="end" class="rental-form">
+    <button mat-flat-button color="primary" cdkFocusInitial (click)="rent()">Rent</button>
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

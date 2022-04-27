@@ -1,0 +1,30 @@
+<div class="inventory-page" *ngIf="window.sessionStorage.getItem('logged_in') === 'true'">
+    <div class="items-search">
+        <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" [(ngModel)]="value">
+            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="search()">Search</button>
+    </div>
+    <div class="items-list">
+        <mat-card *ngFor="let item of items" class="item-card">
+            <mat-card-title>{{item.movie_title}}</mat-card-title>
+            <mat-card-subtitle>{{convertMediaType(item.media_code)}}</mat-card-subtitle>
+            <mat-card-content>
+                <p>${{item.rental_rate}}<span id='stock-span'>In Stock: {{item.number_in_stock}}</span></p>
+            </mat-card-content>
+            <mat-divider inset></mat-divider>
+            <mat-card-actions>
+                <button mat-flat-button *ngIf="item.number_in_stock > 0" (click)="openRentalForm(item.item_id)" color="primary">Rent</button>
+                <button mat-stroked-button *ngIf="item.number_in_stock < 1" disabled>Unavailable</button>
+                <button mat-stroked-button routerLink="/inventory/{{item.item_id}}">Edit</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+<div class="login-warning" *ngIf="window.sessionStorage.getItem('logged_in') === 'false'">
+    <p>You must be logged in to view the inventory.</p>
+</div>

@@ -1,0 +1,14 @@
+.login-form {
+    width: 90%;
+    margin-left: auto;
+    margin-top: 5em;
+}
+
+#login-button {
+    width: 200px;
+    padding: 0.5em;
+}
+
+.mat-form-field {
+    width: 300px;
+}
