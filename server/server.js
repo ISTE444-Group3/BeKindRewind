@@ -44,7 +44,6 @@ morgan.token('username', function (req, res) {
 //app.use(morgan('combined', {stream: accessLogStream}));
 app.use(morgan(':date[iso] - :username   ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"',{stream: accessLogStream}));
 
-
 // CORS Definitions
 app.use(cors({
   origin: '*'
