@@ -1,0 +1,17 @@
+<h1 class="rentals-header" *ngIf="window.sessionStorage.getItem('logged_in') === 'true'">Rentals</h1>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" *ngIf="window.sessionStorage.getItem('logged_in') === 'true'">
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+      <th mat-header-cell *matHeaderCellDef>
+        {{column.header}}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        {{column.cell(row)}}
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<div class="login-warning" *ngIf="window.sessionStorage.getItem('logged_in') === 'false'">
+  <p>You must be logged in to view rentals.</p>
+</div>

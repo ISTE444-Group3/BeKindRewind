@@ -1,0 +1,33 @@
+<div class="add-item-form" *ngIf="window.sessionStorage.getItem('logged_in') === 'true'">
+    <h2>Add Item</h2>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Movie Title:</mat-label>
+            <input #title matInput type="text">
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Media Type:</mat-label>
+            <mat-select [(ngModel)]="type_select" name="type">
+              <mat-option [value]="1">VHS</mat-option>
+              <mat-option [value]="2">DVD</mat-option>
+              <mat-option [value]="2">LASERDISC</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Number in Stock:</mat-label>
+            <input #num_stock matInput type="number">
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <mat-label>Rental Rate:</mat-label>
+            <input #rate matInput type="number">
+        </mat-form-field>
+        <br />
+        <button mat-flat-button color="primary" type="button" (click)="addItem(title.value, num_stock.value, rate.value)">Add Item</button>
+    </form>
+</div>
+<div class="login-warning" *ngIf="window.sessionStorage.getItem('logged_in') === 'false'">
+    <p>You must be logged in to add an item.</p>
+</div>
