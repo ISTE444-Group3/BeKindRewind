@@ -31,7 +31,7 @@ export class ApiService {
 
   // token header
   private token: any = '';
-
+  private user: any='';
   // functions
   setToken(token: String): void {
     this.token = token;
@@ -40,7 +40,7 @@ export class ApiService {
   // inventory
   getItems(): Observable<Item[]> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.get<Item[]>(this.inventory, httpOptions);
@@ -48,7 +48,7 @@ export class ApiService {
 
   getItemsByName(name: String): Observable<Item[]> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.get<Item[]>(`${this.inventory}?name=${name}`, httpOptions)
@@ -56,7 +56,7 @@ export class ApiService {
 
   addItem(media_code: number, movie_title: String, number_in_stock: number, rental_rate: number): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.post<Item>(`${this.inventory}?media_code=${media_code}&movie_title=${movie_title}&number_in_stock=${number_in_stock}&rental_rate=${rental_rate}`, null, httpOptions);
@@ -79,7 +79,7 @@ export class ApiService {
     }
 
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.put(url, null, httpOptions);
@@ -96,7 +96,7 @@ export class ApiService {
     }
 
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
     
     return this.http.delete<Item>(url, httpOptions);
@@ -105,7 +105,7 @@ export class ApiService {
   // rentals
   getRentals(): Observable<Rental[]> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.get<Rental[]>(this.rentals, httpOptions);
@@ -113,7 +113,7 @@ export class ApiService {
 
   getRentalsForCustomer(name: String): Observable<Rental[]> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.get<Rental[]>(`${this.rentals}?name=${name}`, httpOptions);
@@ -121,7 +121,7 @@ export class ApiService {
 
   newRental(customer: number, item: number, notes: String): Observable<any> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.post<Rental>(`${this.rentals}?customer_id=${customer}&item_id=${item}&notes=${notes}`, null, httpOptions);
@@ -130,7 +130,7 @@ export class ApiService {
   // customers
   getCustomers(): Observable<Customer[]> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.get<Customer[]>(this.customer, httpOptions);
@@ -138,7 +138,7 @@ export class ApiService {
 
   getCustomersByName(name: String): Observable<Customer[]> {
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.get<Customer[]>(`${this.customer}?name=${name}`, httpOptions)
@@ -152,10 +152,11 @@ export class ApiService {
     };
 
     let httpOptions = {
-      headers: new HttpHeaders({ 'x-access-token': this.token })
+      headers: new HttpHeaders({ 'x-access-token': this.token, 'username':this.user })
     };
 
     return this.http.post<User>(`${this.login}`, info, httpOptions).pipe(tap(user => {
+      this.user = user.email 
       this.token = user.session_token;
     }));
   }
