@@ -54,7 +54,7 @@ export class ItemDetailComponent implements OnInit {
 
   deleteItem() {
     this.apiService.deleteItem(this.selected_item!.item_id).subscribe((res) => {
-      if (res['rowsUpdated'] > 0) {
+      if (res['rowsDeleted'] > 0) {
         this.router.navigateByUrl('/inventory');
       }
     });
